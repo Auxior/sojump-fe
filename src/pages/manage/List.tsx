@@ -1,7 +1,10 @@
 import React, { FC, useState } from 'react'
+import { Typography } from 'antd'
 import { useTitle } from 'ahooks'
 import QuestionCard from '../../components/QuestionCard'
 import styles from './common.module.scss'
+
+const { Title } = Typography
 
 const rawQuestionList = [
   {
@@ -47,7 +50,7 @@ const List: FC = () => {
     <>
       <div className={styles.header}>
         <div className={styles.left}>
-          <h3>我的问卷</h3>
+          <Title level={3}>我的问卷</Title>
         </div>
         <div className={styles.right}> (搜索) </div>
       </div>
