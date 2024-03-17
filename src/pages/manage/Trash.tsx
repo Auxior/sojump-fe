@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react'
 import { useTitle } from 'ahooks'
-import { Typography, Empty, Table, Tag, Button, Space, Modal, Spin } from 'antd'
+import { Typography, Empty, Table, Tag, Button, Space, Modal, Spin, message } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { useRequest } from 'ahooks'
 import ListSearch from '../../components/ListSearch'
 import ListPage from '../../components/ListPage'
 import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
+import { updateQuestionService } from '../../services/question'
 import styles from './common.module.scss'
 
 const { Title } = Typography
@@ -13,11 +15,28 @@ const { confirm } = Modal
 const Trash: FC = () => {
   useTitle('问卷星 - 回收站')
 
-  const { data = {}, loading } = useLoadQuestionListData({ isDeleted: true })
+  const { data = {}, loading, refresh } = useLoadQuestionListData({ isDeleted: true })
   const { list = [], total = 0 } = data
 
   // 记录选中的 id
   const [selectedIds, setSelectedIds] = useState<string[]>([])
+
+  // 恢复
+  const { run: recover } = useRequest(
+    async () => {
+      for await (const id of selectedIds) {
+        await updateQuestionService(id, { isDeleted: false })
+      }
+    },
+    {
+      manual: true,
+      debounceWait: 500, // 防抖
+      onSuccess() {
+        message.success('恢复成功')
+        refresh() // 手动刷新列表
+      },
+    }
+  )
 
   function del() {
     confirm({
@@ -56,7 +75,7 @@ const Trash: FC = () => {
     <>
       <div style={{ marginBottom: '16px' }}>
         <Space>
-          <Button type="primary" disabled={selectedIds.length === 0}>
+          <Button type="primary" disabled={selectedIds.length === 0} onClick={recover}>
             恢复
           </Button>
           <Button danger disabled={selectedIds.length === 0} onClick={del}>
