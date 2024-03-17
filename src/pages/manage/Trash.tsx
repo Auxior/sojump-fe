@@ -3,6 +3,7 @@ import { useTitle } from 'ahooks'
 import { Typography, Empty, Table, Tag, Button, Space, Modal, Spin } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import ListSearch from '../../components/ListSearch'
+import ListPage from '../../components/ListPage'
 import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
 import styles from './common.module.scss'
 
@@ -96,6 +97,9 @@ const Trash: FC = () => {
         )}
         {!loading && list.length === 0 && <Empty description="暂无数据" />}
         {list.length > 0 && TableElem}
+      </div>
+      <div className={styles.footer}>
+        <ListPage total={total} />
       </div>
     </>
   )
