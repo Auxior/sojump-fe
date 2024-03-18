@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Result, Button } from 'antd'
-import { MANAGE_INDEX__PATHNAME } from '../router'
+import { MANAGE_INDEX_PATHNAME } from '../router'
 
 const NotFound: FC = () => {
   const nav = useNavigate()
@@ -15,7 +15,7 @@ const NotFound: FC = () => {
         <Button
           type="primary"
           onClick={() => {
-            nav(MANAGE_INDEX__PATHNAME)
+            nav(MANAGE_INDEX_PATHNAME)
           }}
         >
           返回首页
