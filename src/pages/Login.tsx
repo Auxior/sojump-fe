@@ -5,6 +5,7 @@ import { UserAddOutlined } from '@ant-design/icons'
 import { useRequest } from 'ahooks'
 import { REGISTER_PATHNAME, MANAGE_INDEX_PATHNAME } from '../router'
 import { loginService } from '../services/user'
+import { setToken } from '../utils/user-token'
 import styles from './Login.module.scss'
 
 const { Title } = Typography
@@ -47,6 +48,9 @@ const Login: FC = () => {
     {
       manual: true,
       onSuccess(result) {
+        const { token = '' } = result
+        setToken(token) // 存储 token
+
         message.success('登录成功')
         nav(MANAGE_INDEX_PATHNAME)
       },
