@@ -27,7 +27,13 @@ function useLoadQuestionData() {
 
     const { title = '', componentList = [] } = data
 
-    dispatch(resetComponents({ componentList }))
+    // 获取默认的 selectedId
+    let selectedId = ''
+    if (componentList.length > 0) {
+      selectedId = componentList[0].fe_id
+    }
+
+    dispatch(resetComponents({ componentList, selectedId }))
   }, [data])
 
   // 判断 id 变化，执行 ajax 加载问卷数据
