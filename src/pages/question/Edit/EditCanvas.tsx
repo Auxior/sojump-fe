@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { Spin } from 'antd'
+import useGetComponentInfo from '../../../hooks/useGetComponentInfo'
 import styles from './EditCanvas.module.scss'
 
 import QuestionTitle from '../../../components/QuestionComponents/QuestionTitle/Component'
@@ -10,6 +11,8 @@ type PropsType = {
 }
 
 const EditCanvas: FC<PropsType> = ({ loading }) => {
+  const { componentList } = useGetComponentInfo()
+
   if (loading)
     return (
       <div style={{ textAlign: 'center', marginTop: '24px' }}>
